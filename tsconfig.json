@@ -17,7 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngc-charts": [
+        "dist/ngc-charts"
+      ],
+      "ngc-charts/*": [
+        "dist/ngc-charts/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
