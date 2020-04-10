@@ -2,6 +2,8 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { maxWidthText } from '../../utils/maxWidh';
 import { getLabels } from '../../utils/labels';
 import { getValues } from '../../utils/values';
+import { getRotateAngle } from '../../utils/rotateAngle';
+import { maxHeightText } from '../../utils/maxHeight';
 
 @Component({
   selector: 'ngc-chart-column',
@@ -42,14 +44,17 @@ export class ColumnChartComponent implements OnInit {
     },
   }
 
+  values = [
+
+  ]
+
   columns = {
     number: 0,
     width: 0
   }
 
-  grid = {
-    ratioY: 0,
-    ratioX: 0
+  ratio = {
+    y: 0
   }
 
 
@@ -59,13 +64,26 @@ export class ColumnChartComponent implements OnInit {
   }
 
   render(){
+    console.log(this.data)
+
     this.chart.height = this.svgElement.nativeElement.clientHeight;
     this.chart.width = this.svgElement.nativeElement.clientWidth;
-    // this.labels.y.data = getValues(this.data)
+
+    this.labels.y.data = getValues(this.data)
     this.labels.y.metadata.maxWidth = maxWidthText(this.labels.y.data)
     this.labels.x.data = getLabels(this.data)
     this.labels.x.metadata.maxWidth = maxWidthText(this.labels.x.data)
-    console.log(this.labels)
+
+    this.columns.number = this.labels.x.data.length;
+    this.columns.width = (this.chart.width - this.labels.y.metadata.maxWidth) / this.columns.number;
+
+    this.labels.x.metadata.rotate = getRotateAngle(this.columns.width, this.labels.x.metadata.maxWidth)
+    this.labels.x.metadata.maxHeight = maxHeightText(this.labels.x.data, this.labels.x.metadata.rotate)
+
+    this.ratio.y = (this.chart.height - this.labels.x.metadata.maxHeight) / this.labels.x.data[this.labels.x.data.length - 1]
+
+    console.log('columns', this.columns)
+    console.log('labels', this.labels)
   }
 
 
