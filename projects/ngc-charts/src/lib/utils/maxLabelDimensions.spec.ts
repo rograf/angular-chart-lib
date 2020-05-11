@@ -1,6 +1,6 @@
 import { getMaxLabelDimensions } from "./maxLabelDimensions";
 
-fdescribe("[FUNCTION] getMaxLabelDimensions", () => {
+describe("[FUNCTION] getMaxLabelDimensions", () => {
   describe("", () => {
     it("should return greater width and height for text in bigger font-size", () => {
       expect(
@@ -44,7 +44,7 @@ fdescribe("[FUNCTION] getMaxLabelDimensions", () => {
           67,
           "10px sans-serif"
         )
-      ).toEqual({ width: 28, height: 44 });
+      ).toEqual({ width: 27, height: 44 });
     });
     it('if arguments are ["morning", "night", "afternoon"], 0 it should return {width: 68, height: 18}', () => {
       expect(
