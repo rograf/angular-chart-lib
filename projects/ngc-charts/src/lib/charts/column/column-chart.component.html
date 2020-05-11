@@ -39,95 +39,37 @@
 
   </g>
 
-  <!-- END AXIS Y -->
 
-  <!-- START LABELS X -->
-  <!-- 0.5 * ((600 - 40 - 20) / 5) + 40  // 108 -->
-  <text text-anchor="middle" x="94" y="385">01.01</text>
-  <text text-anchor="middle" x="202" y="385">02.01</text>
-  <text text-anchor="middle" x="310" y="385">03.01</text>
-  <text text-anchor="middle" x="418" y="385">04.01</text>
-  <text text-anchor="middle" x="526" y="385">05.01</text>
-  <!-- END LABELS X -->
+  <g id="axisX">
 
-  <!-- START VALUES -->
-  <!-- ((108 - 10) / 2) - 1 -->
-  <rect
-    x="45"
-    y="360"
-    [attr.width]="48"
-    [attr.height]="85"
-    style="fill: rgba(73, 153, 19, 0.8); transform: translate3d(0, -85px, 0);"
-  />
-  <rect
-    x="94"
-    y="360"
-    [attr.width]="48"
-    [attr.height]="0"
-    style="fill: rgb(255, 0, 0, 0.8); transform: translate3d(0, -0px, 0);"
-  />
+    <!-- START LABELS X -->
+    <text 
+      *ngFor="let label of labels.x.data; let i = index"
+      [attr.x]="labels.y.metadata.maxWidth + padding.normal + columns.width * i + columns.width / 2"
+      [attr.y]="(labels.x.metadata.maxHeight - padding.normal / 2) * -1"
+      [style.transform]="style.translate.startBottom"
+      text-anchor="middle" >
+        {{label}}
+    </text>
+    <!-- END LABELS X -->
 
-  <rect
-    x="153"
-    y="360"
-    [attr.width]="48"
-    [attr.height]="297.5"
-    style="fill: rgb(73, 153, 19, 0.8); transform: translate3d(0, -297.5px, 0);"
-  />
-  <rect
-    x="202"
-    y="360"
-    [attr.width]="48"
-    [attr.height]="0"
-    style="fill: rgb(255, 0, 0, 0.8); transform: translate3d(0, -0px, 0);"
-  />
+    <!-- START VALUES -->
+    <g *ngFor='let serie of series; let iSeries = index'>
+      <g *ngFor='let value of serie; let iValues = index'>
+        <rect
+          [attr.x]="iSeries * columns.width + (columns.paddingOutside + labels.y.metadata.maxWidth + padding.normal) + iValues * (columns.paddingInside + columns.barWidth)"
+          [attr.y]="(labels.y.metadata.maxHeight + 2 * padding.normal +  value * ratio.y) * -1"
+          [attr.width]="columns.barWidth"
+          [attr.height]="value * ratio.y"
+          [style.transform]="style.translate.startBottom"
+          [style.fill]="colors[iValues]"
+        />
+      </g>
+    </g>
+    <!-- END VALUES -->
 
-  <rect
-    x="261"
-    y="360"
-    [attr.width]="48"
-    [attr.height]="42.5"
-    style="fill: rgb(73, 153, 19, 0.8); transform: translate3d(0, -42.5px, 0);"
-  />
-  <rect
-    x="310"
-    y="360"
-    [attr.width]="48"
-    [attr.height]="255"
-    style="fill: rgb(255, 0, 0, 0.8); transform: translate3d(0, -255px, 0);"
-  />
+  </g>
 
-  <rect
-    x="369"
-    y="360"
-    [attr.width]="48"
-    [attr.height]="0"
-    style="fill: rgb(73, 153, 19, 0.8); transform: translate3d(0, -0px, 0);"
-  />
-  <rect
-    x="418"
-    y="360"
-    [attr.width]="48"
-    [attr.height]="0"
-    style="fill: rgb(255, 0, 0, 0.8); transform: translate3d(0, -0px, 0);"
-  />
-
-  <rect
-    x="477"
-    y="360"
-    [attr.width]="48"
-    [attr.height]="0"
-    style="fill: rgb(73, 153, 19, 0.8); transform: translate3d(0, -0px, 0);"
-  />
-  <rect
-    x="526"
-    y="360"
-    [attr.width]="48"
-    [attr.height]="85"
-    style="fill: rgb(255, 0, 0, 0.8); transform: translate3d(0, -85px, 0);"
-  />
-
-  <!-- END VALUES -->
 </svg>
 
 <ngc-chart-legend></ngc-chart-legend>

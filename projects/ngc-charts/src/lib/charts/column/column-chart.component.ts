@@ -19,9 +19,6 @@ export class ColumnChartComponent implements OnInit {
 
   @ViewChild('svg', {static:true}) svgElement:ElementRef<SVGAElement>
 
-  a = 10
-  b = 10
-
   padding = {
     small: 5,
     normal: 10,
@@ -35,7 +32,7 @@ export class ColumnChartComponent implements OnInit {
 
   labels = {
     x: {
-      data: [],
+      data: ["01.01", "02.01", "03.01", "04.01", "05.01"],
       metadata: {
         maxWidth: 0,
         maxHeight: 21,
@@ -45,7 +42,7 @@ export class ColumnChartComponent implements OnInit {
     y: {
       data: [0,2,4,6,8],
       metadata: {
-        maxWidth: 30,
+        maxWidth: 20,
         maxHeight: 21,
         rotate: 0,
         maxValue: 7
@@ -53,31 +50,39 @@ export class ColumnChartComponent implements OnInit {
     },
   }
 
-  values = [
-
+  series = [
+    [2,0],
+    [7,0],
+    [1,6],
+    [0,0],
+    [0,2],
   ]
 
   columns = {
     number: 0,
-    width: 0
+    width: 108,
+    barWidth: 48,
+    paddingInside: 2,
+    paddingOutside: 4 
   }
 
   ratio = {
-    y: 42.375 //400 - (21 + 10 + 10) - 20 = 339 / 8
+    y: 0
   }
 
   style = {
     fill: {
-      horizontalLine: "rgb(204, 204, 204)"
+      horizontalLine: "rgb(204, 204, 204)",
     },
     translate: {
       startBottom: null
     }
   }
 
+  colors = ["rgba(73, 153, 19, 0.8)", "rgb(255, 0, 0, 0.8)"]
+
 
   ngOnInit() {
-
     this.render();
   }
 
@@ -90,6 +95,9 @@ export class ColumnChartComponent implements OnInit {
     this.chart.width = this.svgElement.nativeElement.clientWidth;
     
     this.style.translate.startBottom = `translate3d(0, ${this.chart.height}px, 0)`
+
+    this.columns.number = this.series.length
+    this.ratio.y = (this.chart.height - (this.labels.x.metadata.maxHeight + 4 * this.padding.normal)) / this.labels.y.data[this.labels.y.data.length - 1]
     
     // this.labels.y.data = getValues(this.data)
     // this.labels.y.metadata.maxWidth = maxWidthText(this.labels.y.data)
