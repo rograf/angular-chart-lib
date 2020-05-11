@@ -27,7 +27,10 @@ export class ColumnChartComponent implements OnInit {
 
   chart = {
     height: 0,
-    width: 0
+    width: 0,
+    level: {
+      x: 0
+    }
   }
 
   labels = {
@@ -98,6 +101,8 @@ export class ColumnChartComponent implements OnInit {
 
     this.columns.number = this.series.length
     this.ratio.y = (this.chart.height - (this.labels.x.metadata.maxHeight + 4 * this.padding.normal)) / this.labels.y.data[this.labels.y.data.length - 1]
+
+    this.chart.level.x = this.labels.y.metadata.maxWidth + this.padding.normal
     
     // this.labels.y.data = getValues(this.data)
     // this.labels.y.metadata.maxWidth = maxWidthText(this.labels.y.data)
