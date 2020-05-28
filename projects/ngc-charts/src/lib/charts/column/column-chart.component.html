@@ -18,7 +18,7 @@
        <!-- START VERTICAL LINES -->
       <rect
         [attr.x]="chart.level.x"
-        [attr.y]="(labels.x.metadata.maxHeight + 2 * padding.normal) * -1 -label * ratio.y"
+        [attr.y]="(chart.level.y + label * ratio.y) * -1"
         [attr.width]="chart.width - chart.level.x"
         [attr.height]="1"
         [style.fill]="style.fill.horizontalLine"
@@ -29,7 +29,7 @@
        <!-- START LABELS Y -->
       <text 
         [attr.x]="labels.y.metadata.maxWidth" 
-        [attr.y]="(labels.x.metadata.maxHeight + 2 * padding.normal) * -1 - label * ratio.y + labels.y.metadata.maxHeight / 4"
+        [attr.y]="(chart.level.y + label * ratio.y - labels.y.metadata.maxHeight / 4) * -1"
         [style.transform]="style.translate.startBottom"
         text-anchor="end">
           {{label}}
@@ -46,7 +46,7 @@
     <text 
       *ngFor="let label of labels.x.data; let i = index"
       [attr.x]="chart.level.x + columns.width * i + columns.width / 2"
-      [attr.y]="(labels.x.metadata.maxHeight - padding.normal / 2) * -1"
+      [attr.y]="(chart.level.y - labels.x.metadata.maxHeight) * -1"
       [style.transform]="style.translate.startBottom"
       text-anchor="middle" >
         {{label}}
@@ -58,7 +58,7 @@
       <g *ngFor='let value of serie; let iValues = index'>
         <rect
           [attr.x]="iSeries * columns.width + (columns.paddingOutside + chart.level.x) + iValues * (columns.paddingInside + columns.barWidth)"
-          [attr.y]="(labels.y.metadata.maxHeight + 2 * padding.normal +  value * ratio.y) * -1"
+          [attr.y]="(chart.level.y + value * ratio.y) * -1"
           [attr.width]="columns.barWidth"
           [attr.height]="value * ratio.y"
           [style.transform]="style.translate.startBottom"

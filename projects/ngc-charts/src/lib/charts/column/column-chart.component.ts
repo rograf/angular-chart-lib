@@ -4,6 +4,7 @@ import { getLabels } from '../../utils/labels';
 import { getValues } from '../../utils/values';
 import { getRotateAngle } from '../../utils/rotateAngle';
 import { getMaxLabelDimensions } from '../../utils/maxLabelDimensions';
+import { getBarColumns } from '../../utils/bar-columns';
 
 @Component({
   selector: 'ngc-chart-column',
@@ -29,7 +30,8 @@ export class ColumnChartComponent implements OnInit {
     height: 0,
     width: 0,
     level: {
-      x: 0
+      x: 0,
+      y: 0
     }
   }
 
@@ -63,10 +65,10 @@ export class ColumnChartComponent implements OnInit {
 
   columns = {
     number: 0,
-    width: 108,
-    barWidth: 48,
-    paddingInside: 2,
-    paddingOutside: 4 
+    width: 0,
+    barWidth: 0,
+    paddingInside: 0,
+    paddingOutside: 0 
   }
 
   ratio = {
@@ -99,10 +101,12 @@ export class ColumnChartComponent implements OnInit {
     
     this.style.translate.startBottom = `translate3d(0, ${this.chart.height}px, 0)`
 
-    this.columns.number = this.series.length
     this.ratio.y = (this.chart.height - (this.labels.x.metadata.maxHeight + 4 * this.padding.normal)) / this.labels.y.data[this.labels.y.data.length - 1]
 
     this.chart.level.x = this.labels.y.metadata.maxWidth + this.padding.normal
+    this.chart.level.y = this.labels.x.metadata.maxHeight + 2 * this.padding.normal;
+
+    this.columns = getBarColumns(this.series, this.chart, {paddingInside: 2, paddingOutside: 4})
     
     // this.labels.y.data = getValues(this.data)
     // this.labels.y.metadata.maxWidth = maxWidthText(this.labels.y.data)
@@ -120,6 +124,9 @@ export class ColumnChartComponent implements OnInit {
 
     // console.log('columns', this.columns)
     // console.log('labels', this.labels)
+
+
+
   }
 
 
